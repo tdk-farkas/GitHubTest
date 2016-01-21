@@ -40,18 +40,35 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private NavigationView navigationView;
     private FloatingActionButton floatingActionButton;
     private CoordinatorLayout coordinatorLayout;
-
+    private RecyclerView recyclerView;
+    private Toolbar toolBar;
+    private ActionBarDrawerToggle mActionBarDrawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v7_act_main);
-
         context = MainActivity.this;
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.id_recyclerview);
+
+        initView();
+        initVals();
+        bindListener();
+    }
+
+    private void initView(){
+        recyclerView = (RecyclerView) findViewById(R.id.id_recyclerview);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.id_swiperefreshlayout);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
+        toolBar = (Toolbar) findViewById(R.id.id_toolbar);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.id_coordinatorlayout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.id_drawerlayout);
+        navigationView = (NavigationView) findViewById(R.id.id_navigationview);
 
         recyclerViewAdapter = new MyRecyclerViewAdapter(context);
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open, R.string.close);
 
+    }
+
+    private void initVals(){
         recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_1));
         recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_2));
         recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_3));
@@ -63,33 +80,26 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_9));
         recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_10));
 
-        recyclerViewAdapter.setOnItemClickListener(context);//设置项点击事件
         recyclerView.setAdapter(recyclerViewAdapter);//设置视图适配器
 //        recyclerView.setLayoutManager(MyLayoutManager.getGridManager(context, 2, GridLayoutManager.VERTICAL, false));//设置布局管理器
         recyclerView.setLayoutManager(MyLayoutManager.getLinearManager(context, LinearLayoutManager.VERTICAL, false));//设置布局管理器
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         swipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
-        swipeRefreshLayout.setOnRefreshListener(context);
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
-        floatingActionButton.setOnClickListener(context);
-
-        Toolbar toolBar = (Toolbar) findViewById(R.id.id_toolbar);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.id_coordinatorlayout);
-
-        setSupportActionBar(toolBar);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.id_drawerlayout);
-
-        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open, R.string.close);
         mActionBarDrawerToggle.syncState();
-        drawerLayout.setDrawerListener(mActionBarDrawerToggle);
-
-        navigationView = (NavigationView) findViewById(R.id.id_navigationview);
 
         navigationView.inflateHeaderView(R.layout.header_nav);
         navigationView.inflateMenu(R.menu.menu_nav);
+
+        setSupportActionBar(toolBar);
+    }
+
+    private void bindListener(){
+        drawerLayout.setDrawerListener(mActionBarDrawerToggle);
+        swipeRefreshLayout.setOnRefreshListener(context);
+        floatingActionButton.setOnClickListener(context);
+        recyclerViewAdapter.setOnItemClickListener(context);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -98,12 +108,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_menu_home:
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_menu_categories:
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_menu_feedback:
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_menu_setting:
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_menu_item_1:
                         new Handler().postDelayed(new Runnable() {
@@ -124,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 }
 
                 menuItem.setChecked(true);
-//                drawerLayout.closeDrawers();
 
                 SnackbarUtil.show(navigationView, msgString, 0);
                 return true;
