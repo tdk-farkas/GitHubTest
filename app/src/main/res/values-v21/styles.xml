@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- 允许使用transitions -->
+        <item name="android:windowContentTransitions">true</item>
+
+        <!-- 允许程序拓展到状态栏 -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--<item name="android:navigationBarColor">#FFFFFFFF</item>-->
+    </style>
+</resources>

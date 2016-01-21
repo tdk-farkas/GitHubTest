@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">GitHubTest</string>
+    <string name="hello">Hello World</string>
+
+    <string name="close">关闭</string>
+    <string name="open">打开</string>
+    <string name="item_clicked">item clicked！</string>
+    <string name="item_longclicked">item long clicked！</string>
+    <string name="item_falot">点击了浮动圆形按钮</string>
+    <string name="header_author_name">唐地坤</string>
+    <string name="header_author_url">www.baidu.com</string>
+    <string name="nav_index">主页</string>
+    <string name="nav_type">分类</string>
+    <string name="nav_returns">反馈</string>
+    <string name="nav_setting">设置</string>
+    <string name="main_menu_1">刷新</string>
+    <string name="nav_menu_title">高级选项</string>
+    <string name="nav_menu_item_1">选项一</string>
+    <string name="nav_menu_item_2">选项二</string>
+</resources>
