@@ -1,6 +1,7 @@
 package farkas.tdk.githubtest.function.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 
@@ -26,8 +27,8 @@ public class MyLayoutManager {
         return new MyLinearManager(context);
     }
 
-    public static MyLinearManager getLinearManager(Context context, int orientation, boolean reverseLayout){
-        return new MyLinearManager(context, orientation, reverseLayout);
+    public static LinearLayoutManager getLinearManager(Context context, int orientation, boolean reverseLayout){
+        return new LinearLayoutManager(context); //new MyLinearManager(context, orientation, reverseLayout);
     }
 
     public static MyLinearManager getLinearManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){

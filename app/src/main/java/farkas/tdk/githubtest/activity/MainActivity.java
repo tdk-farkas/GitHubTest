@@ -25,7 +25,6 @@ import java.io.ByteArrayOutputStream;
 
 import farkas.tdk.githubtest.R;
 import farkas.tdk.githubtest.function.Bean.DataItem;
-import farkas.tdk.githubtest.function.adapter.MyLayoutManager;
 import farkas.tdk.githubtest.function.adapter.MyRecyclerViewAdapter;
 import farkas.tdk.githubtest.function.animation.Transition;
 import farkas.tdk.githubtest.function.utils.SnackbarUtil;
@@ -65,25 +64,26 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         recyclerViewAdapter = new MyRecyclerViewAdapter(context);
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open, R.string.close);
-
     }
 
     private void initVals(){
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_1));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_2));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_3));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_4));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_5));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_6));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_7));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_8));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_9));
-        recyclerViewAdapter.mDatas.add(new DataItem(R.drawable.pic_10));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_1));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_2));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_3));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_4));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_5));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_6));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_7));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_8));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_9));
+        recyclerViewAdapter.addItem(new DataItem(R.drawable.pic_10));
 
-        recyclerView.setAdapter(recyclerViewAdapter);//设置视图适配器
-//        recyclerView.setLayoutManager(MyLayoutManager.getGridManager(context, 2, GridLayoutManager.VERTICAL, false));//设置布局管理器
-        recyclerView.setLayoutManager(MyLayoutManager.getLinearManager(context, LinearLayoutManager.VERTICAL, false));//设置布局管理器
+//        recyclerView.setLayoutManager(MyLayoutManager.getLinearManager(context, LinearLayoutManager.VERTICAL, false));//设置布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(recyclerViewAdapter);//设置视图适配器
 
         swipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
 
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
                 int temp = (int) (Math.random() * 10);
-                recyclerViewAdapter.mDatas.add(0, new DataItem("new" + temp));
+                recyclerViewAdapter.addItem(0, new DataItem("new" + temp));
                 recyclerViewAdapter.notifyDataSetChanged();
             }
         }, 1000);
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             ((BitmapDrawable) ((ImageView) view).getDrawable()).getBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
             Intent intent = new Intent();
-            intent.setClass(MainActivity.this, NextActivity.class);
+            intent.setClass(context, NextActivity.class);
             intent.putExtra(NextActivity.class.getName(), stream.toByteArray());
             startActivity(intent);
             overridePendingTransition(R.anim.act_move_in, R.anim.act_move_out);

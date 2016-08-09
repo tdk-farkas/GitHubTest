@@ -38,6 +38,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
         mDatas = new ArrayList<>();
     }
 
+    public void addItem(DataItem data){
+        mDatas.add(data);
+    }
+
+    public void addItem(int index,DataItem data){
+        mDatas.add(index,data);
+    }
     /**
      * 创建ViewHolder
      */
